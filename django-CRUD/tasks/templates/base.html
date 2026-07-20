@@ -11,15 +11,18 @@
             <li><a href="/">Home</a></li>
         </ul>
         <ul>
-            <li><a href="/task/">Task</a></li>
+            <li><a href="/task">Task</a></li>
         </ul>
         {% if user.is_authenticated %}
             <ul>
-                <li><a href="logout/">Logout</a></li>
+                <li><a href="/logout">Logout</a></li>
             </ul>
         {% else %}
             <ul>
-                <li><a href="/signup/">Signup</a></li>
+                <li><a href="/signup">Signup</a></li>
+            </ul>
+            <ul>
+                <li><a href="/signin">signin</a></li>
             </ul>
         {% endif %}
 

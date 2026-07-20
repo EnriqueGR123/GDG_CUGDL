@@ -38,7 +38,6 @@ class otro(empleado):
     def request(self, days):
         return f'{self.name} requested {days} days'
     
-
 adrian = chef('adrian', 'otro','123')
 
 adri = otro('adri', 'apellido')
