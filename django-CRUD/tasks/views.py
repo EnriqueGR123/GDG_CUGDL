@@ -4,6 +4,10 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.contrib.auth import login,logout, authenticate
 from django.db import IntegrityError
+from .forms import CreateTask
+from .models import task
+from django.contrib.auth.decorators import login_required
+
 # Create your views here.
 
 def home(request):
@@ -36,10 +40,31 @@ def signup(request):
             'error': 'Contraseña no coincide'
             })
 
+@login_required
+def create_task(request):
+    if request.method == 'GET':
+        return render(request,'create_task.html',{
+            'form': CreateTask 
+        })
+    else:
+        try:
+        #El usuario debe estar autenticado
+            form = CreateTask(request.POST)
+            new_task = form.save(commit=False)
+            new_task.user = request.user
+            new_task.save()
+            return redirect('task')
+        except ValueError:
+             return render(request,'create_task.html',{
+            'form': CreateTask 
+        })
 
 
-def task(request):
-    return render(request, 'task.html')
+def show_task(request):
+    tasks = task.objects.filter(user = request.user, daycompleted__isnull=True)
+    return render(request, 'task.html',{
+        'tasks' : tasks
+    })
 
 def signout(request):
     logout(request)
@@ -61,4 +86,6 @@ def signin(request):
         else:
              login(request,user)
              return redirect('task')
+
+
 
