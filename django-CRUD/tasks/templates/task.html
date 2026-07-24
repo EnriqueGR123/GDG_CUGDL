@@ -9,15 +9,15 @@
     {% block content %}
 
 
-        <h1>tasks</h1>
-
-
+        <h1>tasks incompletas</h1>
         {% for task in tasks  %} 
+           <a href="{% url 'task_detail' task.id %}">
             {% if task.isimportant %}
                 <strong>{{task.title}}</strong>
             {% else %}
             <h2>{{task.title}}</h2>
         {% endif %}
+           </a>
         <h2>{{task.title}}</h2>
         <p>{{task.description}}</p>
         <p>{{task.user}}</p>
