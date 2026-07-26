@@ -1,4 +1,10 @@
-FROM alpine
-
-
-CMD ["echo","Hola mundo "]
+#Seleccionamos la imagen 
+FROM node:20
+#Carpeta donde metemos el codigo fuente de la app, la ruta es en base al contenedor 
+RUN mkdir -p /home/app
+#Permite acceder a los archivos de nuestro SO anfitrion
+COPY . /home/app
+#Exponer un puerto para que otros contenedores se puedan conectar a este contenedor
+EXPOSE 3000
+#Indicar el comando que tiene que ejecutar para que la app corra
+CMD ["node", '/home/app/index.js']
