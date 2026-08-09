@@ -1,10 +1,14 @@
 services:
   chanchito:
-    build: .
+    build:
+      context: .
+      dockerfile : Dockerfile.dev
     ports:
       - "3000:3000"
     links: 
       - monguito
+    volumes:
+      - .:/home/app
 #Docker compose crea una red 
   monguito:
     image: mongo
@@ -17,7 +21,7 @@ services:
       - mongo-data: /data/db
       #rutas mysql -> /var/lib/mysql
       #rutas postgres -> /var/lib/postgresql/data 
-
-  
 version:
   mongo-data:
+
+# Correr el archivo: docker compose -f docker-compose-dev.yml up 

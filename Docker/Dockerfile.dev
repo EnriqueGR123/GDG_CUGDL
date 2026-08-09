@@ -1,0 +1,12 @@
+#Seleccionamos la imagen 
+FROM node:20
+
+RUN npm i -g nodemon
+#Carpeta donde metemos el codigo fuente de la app, la ruta es en base al contenedor 
+RUN mkdir -p /home/app
+#Indica con cual ruta vamos a utilizar
+WORKDIR /home/app/
+#Exponer un puerto para que otros contenedores se puedan conectar a este contenedor
+EXPOSE 3000
+#Indicar el comando que tiene que ejecutar para que la app corra
+CMD ["nodemon", 'index.js']
