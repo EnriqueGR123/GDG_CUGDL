@@ -70,8 +70,9 @@ def update_movie(id:int, movie:MovieUpdate) -> List[Movie]:
             item.category = movie.category
     content = [movie.model_dump() for movie in movies] #Convertirlo a diccionario
     return JSONResponse(content = content, status_code=200)
-#Borrar registro mediante ID
 
+
+#Borrar registro mediante ID
 @movie_router.delete('/{id}', tags=['Movies'])
 def del_movie(id:int)  -> List[Movie]:
     for item in movies: 

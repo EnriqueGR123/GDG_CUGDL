@@ -1,18 +1,18 @@
 import os
-from fastapi import FastAPI, Request, Response, status
+from fastapi import FastAPI, Query, Request, Response, status, Depends
 from fastapi.responses import  JSONResponse, PlainTextResponse
 from src.routers.movie_router import movie_router
 from src.utilis.http_error_handler import HTTP_error_handler
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-
+from typing import Annotated
 
 app = FastAPI()
 app.add_middleware(HTTP_error_handler) 
 static_path = os.path.join(os.path.dirname(__file__), 'static/')
 templates_path = os.path.join(os.path.dirname(__file__), 'templates/')
 
-app.mount('/static', StaticFiles(directory=static_path), name = 'static')
+app.mount('/static', StaticFiles(directory=static_path), name = 'static ')
 
 templates = Jinja2Templates(directory=templates_path, )
 
@@ -33,4 +33,26 @@ def home(request:Request):
         context={'message': 'Hola'})
 
 app.include_router(prefix='/movie', router=movie_router)
+
+
+
+# def commonParams(startDate:str, endDate:str ):
+#     return {'startDate': startDate, 'endDate': endDate }
+
+# commonsParm = Annotated[dict, Depends(commonParams)]
+
+class CommonsParams:
+    def __init__(self, startDate:str, endDate:str ):
+        self.startDate = startDate 
+        self.endDate = endDate 
+
+
+@app.get('/users', tags=["Users"])
+def get_users(commons:CommonsParams = Depends(CommonsParams)):
+    return f'User created from {commons.startDate} to {commons.endDate}'
+
+
+@app.get('/customers', tags=["Users"])
+def get_customers(commons:CommonsParams = Depends(CommonsParams)):
+    return f'customers created from {commons.startDate} to {commons.endDate}'
 

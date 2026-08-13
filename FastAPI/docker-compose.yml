@@ -1,0 +1,11 @@
+services:
+    fastapi: #Nombre del servicio 
+        image: imagefastapi
+        build: . 
+        container_name: fastAPI_APP
+        ports:  #Conf de puertos, 
+                #indica que cada que se acceda al pueto 8000 del bost tome todo lo del puerto 8000 del contenedor
+          - "8000:8000"
+          # Docker monta el directorio del host dentro del contenedotr 
+        volumes:
+          - ./:/app

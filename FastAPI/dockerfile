@@ -1,0 +1,23 @@
+FROM python:3.12
+#No muestra por consola si tenemos que instalar la version de pip a la mas reciente 
+ENV PIP_DISABLE_PIP_VERSION_CHECK = 1 
+
+#Hace que Python muestre los logs inmediatamente en consola
+#Cuanda se ejcuta una app en docker, evita que haya algun tipo de retraso en consola
+ENV PYTHONUNBUFFERED = 1 
+
+WORKDIR /app
+
+COPY requirements.txt . 
+#Crear un entonrno virtual 
+RUN python -m venv venv  
+#Activar la maquina virtual
+RUN /bin/bash -c 'source venv/bin/activate' 
+#Instala dependencias 
+RUN pip install --no-cache-dir -r requirements.txt
+#Copiar el resto de los archivos  que esta ubicados en mi maquina, dentro de mi directorio de la imagen
+COPY . .
+# Puerto que utiliza la aplicación
+EXPOSE 8000
+#ETABLECER UN HOST "--host", "0.0.0.0", 
+CMD ["uvicorn", "main:app", "--reload", "--port", "8000" ]
