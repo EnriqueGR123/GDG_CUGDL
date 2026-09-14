@@ -214,3 +214,7 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 .semana_3/BTC USD 1 Min Data.csv
+
+.Semestre3/.ipynb_checkpoints
+
+*.csv
